@@ -1,0 +1,869 @@
+{
+    "name": "anyrun_dev",
+    "version": "1.2.0",
+    "label": "ANY.RUN",
+    "description": "ANY.RUN connector performs actions like get history, get report, and run new analysis.",
+    "publisher": "Community",
+    "icon_small_name": "small.png",
+    "icon_large_name": "medium.png",
+    "category": "Malware Analysis",
+    "configuration": {
+        "fields": [
+            {
+                "title": "Server Address",
+                "name": "server",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "value": "https://api.any.run",
+                "description": "Specify the FQDN of the ANY.RUN server to which you will connect and perform automated operations."
+            },
+            {
+                "title": "Username",
+                "name": "user",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "description": "Specify the Username to access the ANY.RUN endpoint to which you will connect and perform automated operations."
+            },
+            {
+                "title": "Password",
+                "name": "password",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "password",
+                "description": "Specify the Password to access the ANY.RUN endpoint to which you will connect and perform automated operations."
+            },
+            {
+                "title": "Verify SSL",
+                "name": "verify_ssl",
+                "required": false,
+                "visible": true,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
+            }
+        ]
+    },
+    "operations": [
+        {
+            "operation": "get_history",
+            "title": "Get History",
+            "description": "Retrieves analysis history from ANY.RUN based on input parameters you have specified.",
+            "category": "investigation",
+            "annotation": "get_history",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Team",
+                    "name": "team",
+                    "visible": true,
+                    "required": false,
+                    "editable": true,
+                    "type": "checkbox",
+                    "tooltip": "Select this checkbox and specify the team to retrieve the history of the team. if you leave the checkbox cleared (default), then your history is retrieved",
+                    "description": "Select this checkbox and specify the team to retrieve the history of the team. if you leave the checkbox cleared (default), then your history is retrieved."
+                },
+                {
+                    "title": "Skip",
+                    "name": "skip",
+                    "visible": true,
+                    "required": false,
+                    "editable": true,
+                    "type": "text",
+                    "value": "0",
+                    "tooltip": "The number of results that this operation should skip. By default, this is set to \"0\"",
+                    "description": "The number of results that this operation should skip. By default, this is set to \"0\"."
+                },
+                {
+                    "title": "Limit",
+                    "name": "limit",
+                    "visible": true,
+                    "required": false,
+                    "editable": true,
+                    "type": "text",
+                    "tooltip": "Maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100.",
+                    "description": "Maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100."
+                }
+            ],
+            "output_schema": {
+                "error": "",
+                "data": {
+                    "tasks": [
+                        {
+                            "verdict": "",
+                            "name": "",
+                            "related": "",
+                            "pcap": "",
+                            "file": "",
+                            "json": "",
+                            "misp": "",
+                            "tags": [],
+                            "date": "",
+                            "hashes": {
+                                "ssdeep": "",
+                                "head_hash": "",
+                                "sha256": "",
+                                "sha1": "",
+                                "md5": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "operation": "get_report",
+            "title": "Get Report",
+            "description": "Retrieves a report for the specified task ID from ANY.RUN based on the task UUID you have specified. The task ID is generated when you have submitted an analysis to ANY.RUN.",
+            "category": "investigation",
+            "annotation": "get_report",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Task ID",
+                    "name": "task_uuid",
+                    "visible": true,
+                    "required": true,
+                    "editable": true,
+                    "type": "text",
+                    "tooltip": "UUID of task",
+                    "description": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN. A Task ID is generated from an analysis submitted to ANY.RUN."
+                }
+            ],
+            "output_schema": {
+                "error": "",
+                "data": {
+                    "analysis": {
+                        "uuid": "",
+                        "permanentUrl": "",
+                        "reports": {
+                            "IOC": "",
+                            "MISP": "",
+                            "HTML": "",
+                            "graph": ""
+                        },
+                        "sandbox": {
+                            "name": "",
+                            "plan": {
+                                "name": ""
+                            }
+                        },
+                        "duration": "",
+                        "creation": "",
+                        "creationText": "",
+                        "tags": [],
+                        "options": {
+                            "timeout": "",
+                            "additionalTime": "",
+                            "fakeNet": "",
+                            "heavyEvasion": "",
+                            "automatedInteractivity": "",
+                            "mitm": "",
+                            "tor": {
+                                "used": "",
+                                "geo": ""
+                            },
+                            "presentation": "",
+                            "video": "",
+                            "hideSource": "",
+                            "network": "",
+                            "privacy": "",
+                            "privateSample": "",
+                            "automatization": {
+                                "uac": ""
+                            }
+                        },
+                        "scores": {
+                            "verdict": {
+                                "score": "",
+                                "threatLevel": "",
+                                "threatLevelText": ""
+                            },
+                            "specs": {
+                                "injects": "",
+                                "autostart": "",
+                                "cpuOverrun": "",
+                                "crashedApps": "",
+                                "crashedTask": "",
+                                "debugOutput": "",
+                                "executableDropped": "",
+                                "exploitable": "",
+                                "lowAccess": "",
+                                "memOverrun": "",
+                                "multiprocessing": "",
+                                "networkLoader": "",
+                                "networkThreats": "",
+                                "rebooted": "",
+                                "serviceLauncher": "",
+                                "spam": "",
+                                "staticDetections": "",
+                                "stealing": "",
+                                "suspStruct": "",
+                                "torUsed": "",
+                                "privEscalation": "",
+                                "notStarted": ""
+                            }
+                        },
+                        "content": {
+                            "mainObject": {
+                                "type": "",
+                                "permanentUrl": "",
+                                "filename": "",
+                                "hashes": {
+                                    "md5": "",
+                                    "sha1": "",
+                                    "sha256": "",
+                                    "ssdeep": ""
+                                },
+                                "info": {
+                                    "ext": "",
+                                    "file": "",
+                                    "mime": "",
+                                    "exif": {
+                                        "ZIP": {
+                                            "ZipRequiredVersion": "",
+                                            "ZipBitFlag": "",
+                                            "ZipCompression": "",
+                                            "ZipModifyDate": "",
+                                            "ZipCRC": "",
+                                            "ZipCompressedSize": "",
+                                            "ZipUncompressedSize": "",
+                                            "ZipFileName": ""
+                                        }
+                                    },
+                                    "trid": [
+                                        {
+                                            "procent": "",
+                                            "extension": "",
+                                            "filetype": ""
+                                        }
+                                    ]
+                                }
+                            },
+                            "video": {
+                                "present": ""
+                            },
+                            "pcap": {
+                                "present": "",
+                                "permanentUrl": ""
+                            },
+                            "screenshot": [
+                                {
+                                    "uuid": "",
+                                    "time": "",
+                                    "permanentUrl": "",
+                                    "thumbnailUrl": ""
+                                }
+                            ]
+                        }
+                    },
+                    "environments": {
+                        "os": {
+                            "title": "",
+                            "build": "",
+                            "product": "",
+                            "variant": "",
+                            "productType": "",
+                            "major": "",
+                            "servicePack": "",
+                            "softSet": "",
+                            "bitness": ""
+                        },
+                        "internetExplorer": {
+                            "version": "",
+                            "kbnum": ""
+                        },
+                        "software": [
+                            {
+                                "title": "",
+                                "version": ""
+                            }
+                        ],
+                        "hotfixes": [
+                            {
+                                "title": ""
+                            }
+                        ]
+                    },
+                    "processes": [
+                        {
+                            "pid": "",
+                            "ppid": "",
+                            "uuid": "",
+                            "image": "",
+                            "commandLine": "",
+                            "fileName": "",
+                            "fileType": "",
+                            "mainProcess": "",
+                            "times": {
+                                "start": "",
+                                "monitoringSince": ""
+                            },
+                            "versionInfo": {
+                                "company": "",
+                                "description": "",
+                                "version": ""
+                            },
+                            "context": {
+                                "rebootNumber": "",
+                                "integrityLevel": "",
+                                "userName": ""
+                            },
+                            "scores": {
+                                "verdict": {
+                                    "score": "",
+                                    "threatLevel": "",
+                                    "threatLevelText": ""
+                                },
+                                "monitoringReason": "",
+                                "dropped": "",
+                                "injected": "",
+                                "loadsSusp": "",
+                                "specs": {
+                                    "autoStart": "",
+                                    "crashedApps": "",
+                                    "debugOutput": "",
+                                    "executableDropped": "",
+                                    "exploitable": "",
+                                    "injects": "",
+                                    "knownThreat": "",
+                                    "lowAccess": "",
+                                    "network": "",
+                                    "networkLoader": "",
+                                    "stealing": "",
+                                    "privEscalation": ""
+                                }
+                            },
+                            "status": "",
+                            "modules": [
+                                {
+                                    "time": "",
+                                    "image": ""
+                                }
+                            ]
+                        }
+                    ],
+                    "modified": {
+                        "files": [
+                            {
+                                "time": "",
+                                "filename": "",
+                                "size": "",
+                                "type": "",
+                                "threatLevel": "",
+                                "process": "",
+                                "info": {
+                                    "file": ""
+                                },
+                                "hashes": {
+                                    "head_hash": "",
+                                    "md5": "",
+                                    "sha1": "",
+                                    "sha256": "",
+                                    "ssdeep": ""
+                                },
+                                "permanentUrl": ""
+                            }
+                        ],
+                        "registry": [
+                            {
+                                "key": "",
+                                "name": "",
+                                "value": "",
+                                "operation": "",
+                                "process": "",
+                                "time": ""
+                            }
+                        ]
+                    },
+                    "network": {
+                        "dnsRequests": [],
+                        "httpRequests": [],
+                        "connections": [],
+                        "threats": []
+                    },
+                    "debugStrings": [],
+                    "incidents": [
+                        {
+                            "threatLevel": "",
+                            "title": "",
+                            "desc": "",
+                            "source": "",
+                            "firstSeen": "",
+                            "count": "",
+                            "mitre": [],
+                            "events": [],
+                            "process": ""
+                        }
+                    ],
+                    "counters": {
+                        "processes": {
+                            "total": "",
+                            "monitored": "",
+                            "suspicious": "",
+                            "malicious": ""
+                        },
+                        "network": {
+                            "http": "",
+                            "connections": "",
+                            "dns": "",
+                            "threats": ""
+                        },
+                        "files": {
+                            "unknown": 3,
+                            "text": 1,
+                            "suspicious": 0,
+                            "malicious": 0
+                        },
+                        "registry": {
+                            "total": "",
+                            "read": "",
+                            "write": "",
+                            "delete": ""
+                        }
+                    },
+                    "mitre": [
+                        {
+                            "id": "",
+                            "phases": [],
+                            "name": ""
+                        }
+                    ],
+                    "status": ""
+                }
+            }
+        },
+        {
+            "operation": "run_analysis",
+            "title": "Run Analysis",
+            "description": "Runs an analysis in ANY.RUN based on the action (type of analysis) you want to perform using ANY.RUN and other input parameters you have specified.",
+            "category": "investigation",
+            "annotation": "run_analysis",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Run By",
+                    "name": "run_by",
+                    "visible": true,
+                    "required": true,
+                    "editable": true,
+                    "type": "multiselect",
+                    "options": [
+                        "Environment",
+                        "Options",
+                        "Object"
+                    ],
+                    "description": "Type of analysis (action) that you want to perform using ANY.RUN. You can choose from the following options: Environment, Options, or Object.",
+                    "onchange": {
+                        "Environment": [
+                            {
+                                "title": "Operation System",
+                                "name": "env_os",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "text",
+                                "tooltip": "Operation System(OS) on which you want to run the ANY.RUN analysis. By default, this is set to \"windows\", which is also its allowed value.",
+                                "value": "windows",
+                                "description": "Operation System(OS) on which you want to run the ANY.RUN analysis. By default, this is set to \"windows\", which is also its allowed value."
+                            },
+                            {
+                                "title": "Bitness",
+                                "name": "env_bitness",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "text",
+                                "value": "32",
+                                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"32\". The allowed values are \"32\" and \"64\"",
+                                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"32\". The allowed values are \"32\" and \"64\""
+                            },
+                            {
+                                "title": "ENV Version",
+                                "name": "env_version",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "text",
+                                "tooltip": "Version of OS",
+                                "value": "7",
+                                "description": "Version of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"7\". The allowed values are \"7\", \"8.1\", and \"10\"."
+                            },
+                            {
+                                "title": "ENV Type",
+                                "name": "env_type",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "select",
+                                "options": [
+                                    "Clean",
+                                    "Office",
+                                    "Complete"
+                                ],
+                                "value": "Complete",
+                                "tooltip": "Environment preset type",
+                                "description": "Environment preset type on which you want to run the ANY.RUN analysis. By default, this is set to \"Complete\". You can choose from the following options: \"Clean\", \"Office\", or \"Complete\" "
+                            }
+                        ],
+                        "Options": [
+                            {
+                                "title": "Network Connection State",
+                                "name": "opt_network_connect",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": true,
+                                "description": "State of the network connection on which you want to run the ANY.RUN analysis. By default, this checkbox is selected, i.e., it is set to \"true\"."
+                            },
+                            {
+                                "title": "FakeNet Feature Status",
+                                "name": "opt_network_fakenet",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": false,
+                                "description": "Status of the FakeNet feature on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
+                            },
+                            {
+                                "title": "TOR Using",
+                                "name": "opt_network_tor",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": false,
+                                "description": "Option that is set for the TOR Using parameter on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
+                            },
+                            {
+                                "title": "HTTPS MITM Proxy",
+                                "name": "opt_network_mitm",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": false,
+                                "description": "Option that is set for the HTTPS MITM proxy parameter on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
+                            },
+                            {
+                                "title": "Geo Location",
+                                "name": "opt_network_geo",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "select",
+                                "options": [
+                                    "Fastest",
+                                    "AU",
+                                    "BR",
+                                    "DE",
+                                    "CH",
+                                    "FR",
+                                    "KR",
+                                    "US",
+                                    "RU",
+                                    "GB",
+                                    "IT"
+                                ],
+                                "description": "Option that is set for the Geo Location parameter on which you want to run the ANY.RUN analysis. You can choose from the following options: \"Fastest\", \"AU\", \"BR\", \"DE\", \"CH\", \"FR\", \"KR\", \"US\", \"RU\", \"GB\", or \"IT\"."
+                            },
+                            {
+                                "title": "Heavy Evasion",
+                                "name": "opt_kernel_heavyevasion",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": false,
+                                "description": "Option that is set for the Heavy Evasion parameter on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
+                            },
+                            {
+                                "title": "Automated Interactivity (ML)",
+                                "name": "opt_automated_interactivity",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": true,
+                                "description": "Automated Interactivity (ML) option"
+                            },
+                            {
+                                "title": "Privacy Setting",
+                                "name": "opt_privacy_type",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "select",
+                                "options": [
+                                    "Public",
+                                    "By Link",
+                                    "Owner"
+                                ],
+                                "description": "Value that is set for the Privacy Settings parameter on which you want to run the ANY.RUN analysis. By default, this is set to \"By Link\". You can choose from the following options: \"Public\", \"By Link\", or \"Owner\"."
+                            },
+                            {
+                                "title": "Timeout",
+                                "name": "opt_timeout",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "text",
+                                "value": "60",
+                                "tooltip": "Default value: 60 Size range: 10-660",
+                                "description": "Value that is set for the Timeout parameter on which you want to run the ANY.RUN analysis. By default, this is set to \"60\". You can specify any number between 10-660."
+                            },
+                            {
+                                "title": "Start Object From",
+                                "name": "obj_ext_startfolder",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "select",
+                                "options": [
+                                    "Desktop",
+                                    "Home",
+                                    "Downloads",
+                                    "App Data",
+                                    "Temp",
+                                    "Windows",
+                                    "Root"
+                                ],
+                                "description": "Object from where you want to start the ANY.RUN analysis. By default, this is set to \"Temp\". You can choose from the following options: \"Desktop\", \"Home\", \"Downloads\", \"App Data\", \"Temp\", \"Windows\", or \"Root\"."
+                            }
+                        ],
+                        "Object": [
+                            {
+                                "title": "Object Type",
+                                "name": "obj_type",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "select",
+                                "options": [
+                                    "File",
+                                    "URL",
+                                    "Download"
+                                ],
+                                "onchange": {
+                                    "File": [
+                                        {
+                                            "title": "File ID(IRI)",
+                                            "name": "file_id",
+                                            "type": "text",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": true,
+                                            "tooltip": "Attachment ID or IRI value of the file that you want to upload to ANY.RUN for analysis. The file ID or IRI is used to access the file in the FortiSOAR 'Attachments' module.",
+                                            "description": "ID or IRI value of the file that you want to upload to ANY.RUN for analysis. The file ID or IRI is used to access the file in the FortiSOAR 'Attachments' module."
+                                        },
+                                        {
+                                            "title": "Execute Command",
+                                            "name": "obj_ext_cmd",
+                                            "type": "text",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": false,
+                                            "tooltip": "Size range: 2-256",
+                                            "description": "Optional command line to be run in ANY.RUN. The supported size range is 2-256. "
+                                        }
+                                    ],
+                                    "URL": [
+                                        {
+                                            "title": "URL",
+                                            "name": "obj_url",
+                                            "type": "text",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": true,
+                                            "tooltip": "Size range: 5-512 Required format: (http/https)://(your-link)",
+                                            "description": "URL that you want to submit to ANY.RUN for analysis. The format that is required is: (http/https)://(your-link)/. The supported size range is 5-512. "
+                                        },
+                                        {
+                                            "title": "Browser Name",
+                                            "name": "obj_ext_browser",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": false,
+                                            "type": "select",
+                                            "options": [
+                                                "Internet Explorer",
+                                                "Google Chrome",
+                                                "Mozilla Firefox",
+                                                "Opera"
+                                            ],
+                                            "description": "Name of the browser name on which you want to run the ANY.RUN analysis. By default, this is set to \"Internet Explorer\". You can choose from the following options: \"Google Chrome\", \"Mozilla Firefox\", \"Opera\", \"Internet Explorer\"."
+                                        }
+                                    ],
+                                    "Download": [
+                                        {
+                                            "title": "URL",
+                                            "name": "obj_url",
+                                            "type": "text",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": false,
+                                            "tooltip": "Size range: 5-512 Required format: (http/https)://(your-link)",
+                                            "description": "URL that you want to submit to ANY.RUN for analysis. The format that is required is: (http/https)://(your-link)/. The supported size range is 5-512."
+                                        },
+                                        {
+                                            "title": "Execute Command",
+                                            "name": "obj_ext_cmd",
+                                            "type": "text",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": false,
+                                            "tooltip": "Size range: 2-256",
+                                            "description": "Optional command line. Used only with \"File\" and \"Download\" object types. Size range: 2-256."
+                                        },
+                                        {
+                                            "title": "User Agent",
+                                            "name": "obj_ext_useragent",
+                                            "type": "text",
+                                            "visible": true,
+                                            "editable": true,
+                                            "required": false,
+                                            "tooltip": "Size range: 2-256",
+                                            "description": "User agent, used only for \"Download\" object types. Size range: 2-256."
+                                        },
+                                        {
+                                            "title": "Hide Source URL",
+                                            "name": "opt_privacy_hidesource",
+                                            "visible": true,
+                                            "required": false,
+                                            "editable": true,
+                                            "type": "checkbox",
+                                            "tooltip": "Default value: false",
+                                            "description": "Select this option, i.e., set it to \"true\" to hide the source URL. By default, this checkbox is cleared, i.e., it is set to \"false\""
+                                        }
+                                    ]
+                                },
+                                "description": "Type of new task.Default value: file. Options You can choose from the following options: \"File\", \"URL\", \"Download\"."
+                            },
+                            {
+                                "title": "Encounter UAC Prompts",
+                                "name": "obj_ext_elevateprompt",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "tooltip": "Default value: true",
+                                "value": true,
+                                "description": "Select this checkbox, i.e., set it to \"true\" to enable UAC prompts. By default, this checkbox is checked, i.e., it is set to \"true\". option."
+                            },
+                            {
+                                "title": "Change Extension",
+                                "name": "obj_ext_extension",
+                                "visible": true,
+                                "required": false,
+                                "editable": true,
+                                "type": "checkbox",
+                                "value": true,
+                                "tooltip": "Default value: true",
+                                "description": "Select this checkbox, i.e., set it to \"true\" to change the extension to \"valid\". By default, this checkbox is checked, i.e., it is set to \"true\"."
+                            }
+                        ]
+                    }
+                }
+            ],
+            "output_schema": {
+                "error": "",
+                "data": {
+                    "taskid": ""
+                }
+            }
+        },
+        {
+            "operation": "get_report_attachments",
+            "title": "Get Report Attachments",
+            "description": "Retrieves several report attachments such as the HTML report, screenshot, execution video, MISP record, etc from ANY.RUN based on the task UUID you have specified.",
+            "category": "investigation",
+            "annotation": "get_report_attachments",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Task ID",
+                    "type": "text",
+                    "name": "task_uuid",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "UUID of task",
+                    "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN.Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN. Note: A Task ID is generated from an analysis submitted to ANY.RUN."
+                }
+            ],
+            "output_schema": ""
+        },
+        {
+            "operation": "get_available_environments",
+            "title": "Get Available Environments",
+            "description": "Retrieves the list of all available sandbox VM environments from ANY.RUN.",
+            "category": "investigation",
+            "annotation": "get_available_environments",
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {
+                "data": {
+                    "environments": [
+                        {
+                            "os": "",
+                            "type": "",
+                            "build": "",
+                            "bitness": "",
+                            "variant": "",
+                            "version": "",
+                            "software": {
+                                "ie": {
+                                    "version": ""
+                                },
+                                "apps": "",
+                                "upps": ""
+                            }
+                        }
+                    ]
+                },
+                "error": ""
+            }
+        },
+        {
+            "operation": "get_user_limits",
+            "title": "Get User Limits",
+            "description": "Retrieves the request limits of the authenticated user, according to the subscribed plan, from ANY.RUN.",
+            "category": "investigation",
+            "annotation": "get_user_limits",
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {
+                "data": {
+                    "limits": {
+                        "api": {
+                            "day": "",
+                            "hour": "",
+                            "month": "",
+                            "minute": ""
+                        },
+                        "web": {
+                            "day": "",
+                            "hour": "",
+                            "month": "",
+                            "minute": ""
+                        },
+                        "parallels": {
+                            "total": "",
+                            "available": ""
+                        }
+                    }
+                },
+                "error": ""
+            }
+        }
+    ],
+    "cs_compatible": true,
+    "help_online": "https://docs.fortinet.com/document/fortisoar/1.1.0/any-run/348/any-run-v1-1-0"
+}
